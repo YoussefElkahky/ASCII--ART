@@ -1,10 +1,13 @@
-package main
+package AsciiArt
 
 import (
+	"embed"
 	"fmt"
-	"os"
 	"strings"
 )
+
+//go:embed standard.txt shadow.txt thinkertoy.txt
+var bannerFiles embed.FS
 
 const (
 	charHeight     = 8
@@ -28,7 +31,7 @@ func BannerFilename(style string) (string, error) {
 
 func LoadBanner(filename string) ([]string, error) {
 
-	data, err := os.ReadFile("AsciiArt/" + filename) 
+	data, err := bannerFiles.ReadFile(filename) 
 	if err != nil {
 		return nil, fmt.Errorf("could not open banner file %s: %s", filename, err)
 	}
